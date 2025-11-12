@@ -4,6 +4,7 @@ namespace SpriteKind {
     export const Køleskab = SpriteKind.create()
     export const LampeWrong = SpriteKind.create()
     export const LampeCorrect = SpriteKind.create()
+    export const ScaleRedux = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -101,6 +102,9 @@ controller.down.onEvent(ControllerButtonEvent.Released, function () {
         . . . . . f f f f f f . . . . . 
         . . . . . f f . . f f . . . . . 
         `)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.ScaleRedux, function (sprite, otherSprite) {
+	
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -224,6 +228,7 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
         `)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, otherSprite) {
+    otherSprite.setScale(1.2, ScaleAnchor.Middle)
     if (controller.B.isPressed()) {
         EnergiBrugt += 0.04 * (game.runtime() - StartTid)
         LampeQuizStatus = 1
@@ -694,11 +699,6 @@ function Intro () {
         ................................................................................................................................................................
         `)
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
-    otherSprite.setScale(1.2, ScaleAnchor.Middle)
-    pause(200)
-    otherSprite.setScale(1, ScaleAnchor.Middle)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Lampe, function (sprite, otherSprite) {
     if (LampeQuizStatus != 1) {
         Lampe.sayText("Tryk \"B\"", 3000, false)
@@ -727,7 +727,44 @@ function LampeQuiz () {
         c c c c c c c c c c c c c c c 
         `)
     game.showLongText("Hvor mange KWh tror du en standerlampe bruger?", DialogLayout.Center)
+    Hero.x += 16
     scene.centerCameraAt(800, 800)
+    ScaleReduxH = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.ScaleRedux)
+    ScaleReduxV = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.ScaleRedux)
     LampeAnswer1 = sprites.create(img`
         cccccccccccccccccccccccccccccccccccccc
         c666666666666666666666666666666666666c
@@ -746,7 +783,7 @@ function LampeQuiz () {
         c666666666666666666666666666666666666c
         cccccccccccccccccccccccccccccccccccccc
         `, SpriteKind.LampeCorrect)
-    tiles.placeOnTile(LampeAnswer1, tiles.getTileLocation(46, 48))
+    tiles.placeOnTile(LampeAnswer1, tiles.getTileLocation(46, 46))
     LampeAnswer2 = sprites.create(img`
         cccccccccccccccccccccccccccccccccccccc
         c666666666666666666666666666666666666c
@@ -765,7 +802,7 @@ function LampeQuiz () {
         c666666666666666666666666666666666666c
         cccccccccccccccccccccccccccccccccccccc
         `, SpriteKind.LampeWrong)
-    tiles.placeOnTile(LampeAnswer2, tiles.getTileLocation(53, 48))
+    tiles.placeOnTile(LampeAnswer2, tiles.getTileLocation(53, 46))
     LampeAnswer3 = sprites.create(img`
         cccccccccccccccccccccccccccccccccccccc
         c666666666666666666666666666666666666c
@@ -784,7 +821,7 @@ function LampeQuiz () {
         c666666666666666666666666666666666666c
         cccccccccccccccccccccccccccccccccccccc
         `, SpriteKind.LampeWrong)
-    tiles.placeOnTile(LampeAnswer3, tiles.getTileLocation(46, 51))
+    tiles.placeOnTile(LampeAnswer3, tiles.getTileLocation(46, 53))
     LampeAnswer4 = sprites.create(img`
         cccccccccccccccccccccccccccccccccccccc
         c666666666666666666666666666666666666c
@@ -803,12 +840,13 @@ function LampeQuiz () {
         c666666666666666666666666666666666666c
         cccccccccccccccccccccccccccccccccccccc
         `, SpriteKind.LampeWrong)
-    tiles.placeOnTile(LampeAnswer4, tiles.getTileLocation(53, 51))
+    tiles.placeOnTile(LampeAnswer4, tiles.getTileLocation(53, 53))
     Cursor = sprites.create(assets.image`Pegefinger`, SpriteKind.Player)
     tiles.placeOnTile(Cursor, tiles.getTileLocation(50, 50))
     controller.moveSprite(Cursor, 100, 100)
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeWrong, function (sprite, otherSprite) {
+    otherSprite.setScale(1.2, ScaleAnchor.Middle)
     if (controller.B.isPressed()) {
         scene.cameraShake(4, 500)
         scene.cameraFollowSprite(Hero)
@@ -1855,6 +1893,8 @@ let LampeAnswer4: Sprite = null
 let LampeAnswer3: Sprite = null
 let LampeAnswer2: Sprite = null
 let LampeAnswer1: Sprite = null
+let ScaleReduxV: Sprite = null
+let ScaleReduxH: Sprite = null
 let Cursor: Sprite = null
 let Lampe: Sprite = null
 let LampeQuizStatus = 0
