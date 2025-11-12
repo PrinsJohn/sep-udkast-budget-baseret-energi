@@ -230,7 +230,7 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, otherSprite) {
     otherSprite.setScale(1.2, ScaleAnchor.Middle)
     if (controller.B.isPressed()) {
-        EnergiBrugt += 0.04 * (game.runtime() - StartTid)
+        EnergiBrugt += 1.04 * (game.runtime() - StartTid)
         LampeQuizStatus = 1
         animation.stopAnimation(animation.AnimationTypes.All, Lampe)
         Lampe.setImage(img`
@@ -270,7 +270,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, 
         sprites.destroyAllSpritesOfKind(SpriteKind.LampeWrong)
         sprites.destroyAllSpritesOfKind(SpriteKind.LampeCorrect)
         sprites.destroy(Cursor)
-        info.setScore(EnergiBrugt)
         Hero = sprites.create(img`
             . . . . . . f f f f . . . . . . 
             . . . . f f f 2 2 f f f . . . . 
@@ -289,9 +288,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, 
             . . . . . f f f f f f . . . . . 
             . . . . . f f . . f f . . . . . 
             `, SpriteKind.Player)
-        tiles.placeOnTile(Hero, tiles.getTileLocation(9, 10))
+        tiles.placeOnTile(Hero, LastLocation.getNeighboringLocation(CollisionDirection.Right))
         controller.moveSprite(Hero)
         scene.cameraFollowSprite(Hero)
+        info.setScore(EnergiBrugt)
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -751,6 +751,7 @@ function LampeQuiz () {
         `)
     game.showLongText("Hvor mange KWh tror du en standerlampe bruger?", DialogLayout.Center)
     scene.centerCameraAt(800, 800)
+    LastLocation = Hero.tilemapLocation()
     sprites.destroy(Hero)
     ScaleReduxV = sprites.create(img`
         666666666666666666666666666666666666666
@@ -1008,7 +1009,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeWrong, function (sprite, ot
             . . . . . f f f f f f . . . . . 
             . . . . . f f . . f f . . . . . 
             `, SpriteKind.Player)
-        tiles.placeOnTile(Hero, tiles.getTileLocation(9, 10))
+        tiles.placeOnTile(Hero, LastLocation.getNeighboringLocation(CollisionDirection.Right))
         controller.moveSprite(Hero)
         scene.cameraFollowSprite(Hero)
         info.changeLifeBy(-1)
@@ -2050,6 +2051,7 @@ let Køleskab: Sprite = null
 let Router: Sprite = null
 let ScaleReduxH: Sprite = null
 let ScaleReduxV: Sprite = null
+let LastLocation: tiles.Location = null
 let Cursor: Sprite = null
 let Lampe: Sprite = null
 let LampeQuizStatus = 0
