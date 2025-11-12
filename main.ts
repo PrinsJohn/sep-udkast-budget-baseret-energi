@@ -224,6 +224,10 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
         `)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, otherSprite) {
+    otherSprite.setScale(1.5, ScaleAnchor.Middle)
+    if (Cursor.overlapsWith(otherSprite) == false) {
+        otherSprite.setScale(1, ScaleAnchor.Middle)
+    }
     if (controller.B.isPressed()) {
         EnergiBrugt += 0.04 * (game.runtime() - StartTid)
         LampeQuizStatus = 1
@@ -687,9 +691,6 @@ function LampeQuiz () {
         c c c c c c c c c c c c c c c 
         `)
     game.showLongText("Hvor mange KWh tror du en standerlampe bruger?", DialogLayout.Center)
-    Cursor = sprites.create(assets.image`Pegefinger`, SpriteKind.Player)
-    tiles.placeOnTile(Cursor, tiles.getTileLocation(50, 50))
-    controller.moveSprite(Cursor, 100, 100)
     scene.centerCameraAt(800, 800)
     LampeAnswer1 = sprites.create(img`
         cccccccccccccccccccccccccccccccccccccc
@@ -767,17 +768,12 @@ function LampeQuiz () {
         cccccccccccccccccccccccccccccccccccccc
         `, SpriteKind.LampeWrong)
     tiles.placeOnTile(LampeAnswer4, tiles.getTileLocation(53, 51))
+    Cursor = sprites.create(assets.image`Pegefinger`, SpriteKind.Player)
+    tiles.placeOnTile(Cursor, tiles.getTileLocation(50, 50))
+    controller.moveSprite(Cursor, 100, 100)
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeWrong, function (sprite, otherSprite) {
-    otherSprite.changeScale(0.5, ScaleAnchor.Middle)
-    if (controller.B.isPressed()) {
-        scene.cameraShake(4, 500)
-        scene.cameraFollowSprite(Hero)
-        controller.moveSprite(Hero)
-        sprites.destroyAllSpritesOfKind(SpriteKind.LampeWrong)
-        sprites.destroyAllSpritesOfKind(SpriteKind.LampeCorrect)
-        sprites.destroy(Cursor)
-    }
+	
 })
 function Lejlighed () {
     StartTid = game.runtime()
@@ -1817,9 +1813,9 @@ let LampeAnswer3: Sprite = null
 let LampeAnswer2: Sprite = null
 let LampeAnswer1: Sprite = null
 let Lampe: Sprite = null
-let Cursor: Sprite = null
 let LampeQuizStatus = 0
 let StartTid = 0
 let EnergiBrugt = 0
+let Cursor: Sprite = null
 let Hero: Sprite = null
 Lejlighed()
