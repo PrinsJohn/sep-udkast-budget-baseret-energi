@@ -224,10 +224,6 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
         `)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, otherSprite) {
-    otherSprite.setScale(1.5, ScaleAnchor.Middle)
-    if (Cursor.overlapsWith(otherSprite) == false) {
-        otherSprite.setScale(1, ScaleAnchor.Middle)
-    }
     if (controller.B.isPressed()) {
         EnergiBrugt += 0.04 * (game.runtime() - StartTid)
         LampeQuizStatus = 1
@@ -663,6 +659,11 @@ function Intro () {
         ................................................................................................................................................................
         `)
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
+    otherSprite.setScale(1.2, ScaleAnchor.Middle)
+    pause(200)
+    otherSprite.setScale(1, ScaleAnchor.Middle)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Lampe, function (sprite, otherSprite) {
     if (LampeQuizStatus != 1) {
         Lampe.sayText("Tryk \"B\"")
@@ -773,7 +774,14 @@ function LampeQuiz () {
     controller.moveSprite(Cursor, 100, 100)
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeWrong, function (sprite, otherSprite) {
-	
+    if (controller.B.isPressed()) {
+        scene.cameraShake(4, 500)
+        scene.cameraFollowSprite(Hero)
+        controller.moveSprite(Hero)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LampeWrong)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LampeCorrect)
+        sprites.destroy(Cursor)
+    }
 })
 function Lejlighed () {
     StartTid = game.runtime()
@@ -1813,9 +1821,9 @@ let LampeAnswer3: Sprite = null
 let LampeAnswer2: Sprite = null
 let LampeAnswer1: Sprite = null
 let Lampe: Sprite = null
+let Cursor: Sprite = null
 let LampeQuizStatus = 0
 let StartTid = 0
 let EnergiBrugt = 0
-let Cursor: Sprite = null
 let Hero: Sprite = null
 Lejlighed()
