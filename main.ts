@@ -698,6 +698,7 @@ function LampeQuiz () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.LampeWrong)
+    tiles.placeOnTile(LampeAnswer1, tiles.getTileLocation(46, 48))
     LampeAnswer2 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -716,6 +717,7 @@ function LampeQuiz () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.LampeWrong)
+    tiles.placeOnTile(LampeAnswer2, tiles.getTileLocation(53, 48))
     LampeAnswer3 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -734,6 +736,7 @@ function LampeQuiz () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.LampeWrong)
+    tiles.placeOnTile(LampeAnswer3, tiles.getTileLocation(46, 51))
     LampeAnswer4 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -752,7 +755,14 @@ function LampeQuiz () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.LampeCorrect)
+    tiles.placeOnTile(LampeAnswer4, tiles.getTileLocation(53, 51))
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeWrong, function (sprite, otherSprite) {
+    otherSprite.changeScale(0.5, ScaleAnchor.Middle)
+    if (controller.B.isPressed()) {
+        scene.cameraShake(4, 500)
+    }
+})
 function Lejlighed () {
     StartTid = game.runtime()
     tiles.setCurrentTilemap(tilemap`level3`)
