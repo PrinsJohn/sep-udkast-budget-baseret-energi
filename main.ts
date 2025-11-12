@@ -2,6 +2,8 @@ namespace SpriteKind {
     export const Objective = SpriteKind.create()
     export const Lampe = SpriteKind.create()
     export const Køleskab = SpriteKind.create()
+    export const LampeWrong = SpriteKind.create()
+    export const LampeCorrect = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -655,7 +657,101 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Lampe, function (sprite, otherSp
     }
 })
 function LampeQuiz () {
-	
+    game.setDialogTextColor(1)
+    game.setDialogFrame(img`
+        c c c c c c c c c c c c c c c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c 6 6 6 6 6 6 6 6 6 6 6 6 6 c 
+        c c c c c c c c c c c c c c c 
+        `)
+    game.showLongText("Hvor mange KWh tror du en standerlampe bruger?", DialogLayout.Center)
+    Cursor = sprites.create(assets.image`Pegefinger`, SpriteKind.Player)
+    tiles.placeOnTile(Cursor, tiles.getTileLocation(50, 50))
+    controller.moveSprite(Cursor, 100, 100)
+    scene.centerCameraAt(800, 800)
+    LampeAnswer1 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.LampeWrong)
+    LampeAnswer2 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.LampeWrong)
+    LampeAnswer3 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.LampeWrong)
+    LampeAnswer4 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.LampeCorrect)
 }
 function Lejlighed () {
     StartTid = game.runtime()
@@ -1690,6 +1786,11 @@ function Lejlighed () {
 let Køleskab: Sprite = null
 let Router: Sprite = null
 let StartTid = 0
+let LampeAnswer4: Sprite = null
+let LampeAnswer3: Sprite = null
+let LampeAnswer2: Sprite = null
+let LampeAnswer1: Sprite = null
+let Cursor: Sprite = null
 let Lampe: Sprite = null
 let Hero: Sprite = null
 Lejlighed()
