@@ -1,6 +1,7 @@
 namespace SpriteKind {
     export const Objective = SpriteKind.create()
     export const Lampe = SpriteKind.create()
+    export const Køleskab = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -176,7 +177,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 function LampeScore () {
-    info.changeScoreBy(1)
+	
 }
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, Hero)
@@ -645,10 +646,19 @@ function Intro () {
         `)
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Lampe, function (sprite, otherSprite) {
-	
+    let LampeQuizStatus = 0
+    if (LampeQuizStatus != 1) {
+        Lampe.sayText("Tryk \"B\"")
+        if (controller.B.isPressed()) {
+            LampeQuiz()
+        }
+    }
 })
+function LampeQuiz () {
+	
+}
 function Lejlighed () {
-    info.setScore(0)
+    StartTid = game.runtime()
     tiles.setCurrentTilemap(tilemap`level3`)
     Hero = sprites.create(img`
         . . . . . . f f f f . . . . . . 
@@ -1658,8 +1668,28 @@ function Lejlighed () {
     100,
     true
     )
+    Køleskab = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Køleskab)
 }
-let Lampe: Sprite = null
+let Køleskab: Sprite = null
 let Router: Sprite = null
+let StartTid = 0
+let Lampe: Sprite = null
 let Hero: Sprite = null
 Lejlighed()
