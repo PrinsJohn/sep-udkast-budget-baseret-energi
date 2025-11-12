@@ -223,6 +223,17 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
         . . . . . . f f f . . . . . . . 
         `)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, otherSprite) {
+    otherSprite.changeScale(0.5, ScaleAnchor.Middle)
+    if (controller.B.isPressed()) {
+        LampeQuizStatus = 1
+        scene.cameraFollowSprite(Hero)
+        controller.moveSprite(Hero)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LampeWrong)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LampeCorrect)
+        sprites.destroy(Cursor)
+    }
+})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     Hero,
@@ -648,7 +659,6 @@ function Intro () {
         `)
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Lampe, function (sprite, otherSprite) {
-    let LampeQuizStatus = 0
     if (LampeQuizStatus != 1) {
         Lampe.sayText("Tryk \"B\"")
         if (controller.B.isPressed()) {
@@ -681,86 +691,91 @@ function LampeQuiz () {
     controller.moveSprite(Cursor, 100, 100)
     scene.centerCameraAt(800, 800)
     LampeAnswer1 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.LampeWrong)
+        cccccccccccccccccccccccccccccccccccccc
+        c666666666666666666666666666666666666c
+        c666666666666666666666666666666666666c
+        c661116666666111666661666166666666666c
+        c616661666661666166661666166666666666c
+        c616661666661666166661666166666666666c
+        c616661666661666166661666166666666666c
+        c616661666661666166661666166666666666c
+        c616661666661666166661111166666666666c
+        c616661666661666166666666166666666666c
+        c616661666661666166666666166666666666c
+        c616661666661666166666666166666666666c
+        c661116661666111666666666166666666666c
+        c666666666666666666666666666666666666c
+        c666666666666666666666666666666666666c
+        cccccccccccccccccccccccccccccccccccccc
+        `, SpriteKind.LampeCorrect)
     tiles.placeOnTile(LampeAnswer1, tiles.getTileLocation(46, 48))
     LampeAnswer2 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
+        cccccccccccccccccccccccccccccccccccccc
+        c666666666666666666666666666666666666c
+        c666666666666666666666666666666666666c
+        c661116666666111666666616666666666666c
+        c616661666661666166666616666666666666c
+        c616661666661666166661116666666666666c
+        c616661666661666166666616666666666666c
+        c616661666661666166666616666666666666c
+        c616661666661666166666616666666666666c
+        c616661666661666166666616666666666666c
+        c616661666661666166666616666666666666c
+        c616661666661666166666616666666666666c
+        c661116661666111666661111166666666666c
+        c666666666666666666666666666666666666c
+        c666666666666666666666666666666666666c
+        cccccccccccccccccccccccccccccccccccccc
         `, SpriteKind.LampeWrong)
     tiles.placeOnTile(LampeAnswer2, tiles.getTileLocation(53, 48))
     LampeAnswer3 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
+        cccccccccccccccccccccccccccccccccccccc
+        c666666666666666666666666666666666666c
+        c666666666666666666666666666666666666c
+        c666666666666666666666666666666666666c
+        c666666166661661666666666666666666666c
+        c666666166661661666666666666666666666c
+        c666661166661616666666666666666666666c
+        c666666166661166666666666666666666666c
+        c666666166661166666666666666666666666c
+        c666666166661611666666666666666666666c
+        c666666166661666166666666666666666666c
+        c666666166661666166666666666666666666c
+        c666611111661666166666666666666666666c
+        c666666666666666666666666666666666666c
+        c666666666666666666666666666666666666c
+        cccccccccccccccccccccccccccccccccccccc
         `, SpriteKind.LampeWrong)
     tiles.placeOnTile(LampeAnswer3, tiles.getTileLocation(46, 51))
     LampeAnswer4 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.LampeCorrect)
+        cccccccccccccccccccccccccccccccccccccc
+        c666666666666666666666666666666666666c
+        c666666666666666666666666666666666666c
+        c666666666666666111666666666666666666c
+        c666666666666661666166666666666666666c
+        c666666666666661666166666666666666666c
+        c666666666666661666166666666666666666c
+        c666666666666661666166666666666666666c
+        c666666666666661666166666666666666666c
+        c666666666666661666166666666666666666c
+        c666666666666661666166666666666666666c
+        c666666666666661666166666666666666666c
+        c666666666666661666166666666666666666c
+        c666666666666666111666666666666666666c
+        c666666666666666666666666666666666666c
+        cccccccccccccccccccccccccccccccccccccc
+        `, SpriteKind.LampeWrong)
     tiles.placeOnTile(LampeAnswer4, tiles.getTileLocation(53, 51))
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeWrong, function (sprite, otherSprite) {
     otherSprite.changeScale(0.5, ScaleAnchor.Middle)
     if (controller.B.isPressed()) {
         scene.cameraShake(4, 500)
+        scene.cameraFollowSprite(Hero)
+        controller.moveSprite(Hero)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LampeWrong)
+        sprites.destroyAllSpritesOfKind(SpriteKind.LampeCorrect)
+        sprites.destroy(Cursor)
     }
 })
 function Lejlighed () {
@@ -1800,7 +1815,8 @@ let LampeAnswer4: Sprite = null
 let LampeAnswer3: Sprite = null
 let LampeAnswer2: Sprite = null
 let LampeAnswer1: Sprite = null
-let Cursor: Sprite = null
 let Lampe: Sprite = null
+let Cursor: Sprite = null
+let LampeQuizStatus = 0
 let Hero: Sprite = null
 Lejlighed()
