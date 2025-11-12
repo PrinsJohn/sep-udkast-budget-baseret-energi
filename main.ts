@@ -1,10 +1,11 @@
 namespace SpriteKind {
-    export const Objective = SpriteKind.create()
+    export const Router = SpriteKind.create()
     export const Lampe = SpriteKind.create()
     export const Køleskab = SpriteKind.create()
     export const LampeWrong = SpriteKind.create()
     export const LampeCorrect = SpriteKind.create()
     export const ScaleRedux = SpriteKind.create()
+    export const Møbel = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -78,7 +79,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . 4 e e f f f f f f e . . . 
         . . . . . . . . . f f f . . . . 
         `],
-    200,
+    150,
     true
     )
 })
@@ -181,7 +182,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . f f f f f f f f f f . . . . 
         . . . f f f . . . f f . . . . . 
         `],
-    200,
+    150,
     true
     )
 })
@@ -230,7 +231,7 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, otherSprite) {
     otherSprite.setScale(1.2, ScaleAnchor.Middle)
     if (controller.B.isPressed()) {
-        EnergiBrugt += 1.04 * (game.runtime() - StartTid)
+        EnergiBrugt += 1.04 * (game.runtime() - StartTid) / 1000
         LampeQuizStatus = 1
         animation.stopAnimation(animation.AnimationTypes.All, Lampe)
         Lampe.setImage(img`
@@ -366,7 +367,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . f f f f f f f f f f . . 
         . . . . . f f . . . f f f . . . 
         `],
-    200,
+    150,
     true
     )
 })
@@ -463,7 +464,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . f f f f f f f . . . . 
         . . . . . . . . . f f f . . . . 
         `],
-    200,
+    150,
     true
     )
 })
@@ -720,7 +721,7 @@ function Intro () {
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Lampe, function (sprite, otherSprite) {
     if (LampeQuizStatus != 1) {
-        Lampe.sayText("Tryk \"B\"", 3000, false)
+        Lampe.sayText("Tryk \"B\"", 500, false)
         if (controller.B.isPressed()) {
             LampeQuiz()
         }
@@ -1068,7 +1069,7 @@ function Lejlighed () {
         .........................
         .........................
         .........................
-        `, SpriteKind.Objective)
+        `, SpriteKind.Router)
     Router.setPosition(220, 58)
     animation.runImageAnimation(
     Router,
@@ -2028,26 +2029,29 @@ function Lejlighed () {
     100,
     true
     )
-    Køleskab = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Køleskab)
+    Reol = sprites.create(img`
+        ....................eeeeeeeeeeeeeeeeeeeeeeeeeee.
+        ..................eee4444444444444444444444444ee
+        ..................ee444444444444444444444444444e
+        ..................ee444444444444444444444444444e
+        ..................ee444444444444444444444444444e
+        ..................ee444444444444444444444444444e
+        ..................eeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        e.................eeefffffffffffffffffffffffffee
+        ..................eeeccc333c444c3cc7c666cc3cccee
+        ..................ffeccc333c444cccc7c666cc3cccef
+        ..................ff4ccccccccccccccccccccccccc4f
+        ..................ff4ccee44444444444444444eecc4f
+        ..................ff4cccc66cc55c6cc22cc3cc7ccc4f
+        ..................ff4cccc66cc55c6cc22cc3cc7ccc4f
+        ..................ff4cccc66ccccc6cc22ccccc7ccc4f
+        ..................ff4ccee44444444444444444eecc4f
+        ..................ff4ccee44444444444444444eecc4f
+        ..................ffffffffffffffffffffffffffff4f
+        `, SpriteKind.Møbel)
+    tiles.placeOnTile(Reol, tiles.getTileLocation(3, 9))
 }
-let Køleskab: Sprite = null
+let Reol: Sprite = null
 let Router: Sprite = null
 let ScaleReduxH: Sprite = null
 let ScaleReduxV: Sprite = null
