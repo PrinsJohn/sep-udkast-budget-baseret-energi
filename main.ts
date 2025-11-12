@@ -224,14 +224,15 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
         `)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, otherSprite) {
-    otherSprite.changeScale(0.5, ScaleAnchor.Middle)
     if (controller.B.isPressed()) {
+        EnergiBrugt += 0.04 * (game.runtime() - StartTid)
         LampeQuizStatus = 1
         scene.cameraFollowSprite(Hero)
         controller.moveSprite(Hero)
         sprites.destroyAllSpritesOfKind(SpriteKind.LampeWrong)
         sprites.destroyAllSpritesOfKind(SpriteKind.LampeCorrect)
         sprites.destroy(Cursor)
+        info.setScore(EnergiBrugt)
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -780,6 +781,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeWrong, function (sprite, ot
 })
 function Lejlighed () {
     StartTid = game.runtime()
+    EnergiBrugt = 0
     tiles.setCurrentTilemap(tilemap`level3`)
     Hero = sprites.create(img`
         . . . . . . f f f f . . . . . . 
@@ -1810,7 +1812,6 @@ function Lejlighed () {
 }
 let Køleskab: Sprite = null
 let Router: Sprite = null
-let StartTid = 0
 let LampeAnswer4: Sprite = null
 let LampeAnswer3: Sprite = null
 let LampeAnswer2: Sprite = null
@@ -1818,5 +1819,7 @@ let LampeAnswer1: Sprite = null
 let Lampe: Sprite = null
 let Cursor: Sprite = null
 let LampeQuizStatus = 0
+let StartTid = 0
+let EnergiBrugt = 0
 let Hero: Sprite = null
 Lejlighed()
