@@ -6,6 +6,7 @@ namespace SpriteKind {
     export const LampeCorrect = SpriteKind.create()
     export const ScaleRedux = SpriteKind.create()
     export const Møbel = SpriteKind.create()
+    export const Seng = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -185,6 +186,9 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     150,
     true
     )
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Seng, function (sprite, otherSprite) {
+    SengDetector.sayText("Makker du skal i skole", 300, false)
 })
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, Hero)
@@ -1021,6 +1025,29 @@ function Lejlighed () {
     StartTid = game.runtime()
     EnergiBrugt = 0
     tiles.setCurrentTilemap(tilemap`level3`)
+    SengDetector = sprites.create(img`
+        .1111.........11111............d
+        ................................
+        ................................
+        ...............................d
+        ................................
+        ................................
+        ...............................d
+        ................................
+        ................................
+        ...............................d
+        ................................
+        ................................
+        ................................
+        ................................
+        ...............................d
+        ................................
+        ................................
+        ................................
+        ................................
+        ...............................d
+        `, SpriteKind.Seng)
+    SengDetector.setPosition(68, 64)
     Hero = sprites.create(img`
         . . . . . . f f f f . . . . . . 
         . . . . f f f 2 2 f f f . . . . 
@@ -2061,6 +2088,7 @@ let Lampe: Sprite = null
 let LampeQuizStatus = 0
 let StartTid = 0
 let EnergiBrugt = 0
+let SengDetector: Sprite = null
 let LampeAnswer4: Sprite = null
 let LampeAnswer3: Sprite = null
 let LampeAnswer2: Sprite = null
