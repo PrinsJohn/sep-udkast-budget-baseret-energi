@@ -1048,44 +1048,45 @@ function Lejlighed () {
         ...............................d
         `, SpriteKind.Seng)
     SengDetector.setPosition(68, 64)
-    Hero = sprites.create(img`
-        . . . . . . f f f f . . . . . . 
-        . . . . f f f 2 2 f f f . . . . 
-        . . . f f f 2 2 2 2 f f f . . . 
-        . . f f f e e e e e e f f f . . 
-        . . f f e 2 2 2 2 2 2 e e f . . 
-        . . f e 2 f f f f f f 2 e f . . 
-        . . f f f f e e e e f f f f . . 
-        . f f e f b f 4 4 f b f e f f . 
-        . f e e 4 1 f d d f 1 4 e e f . 
-        . . f e e d d d d d d e e f . . 
-        . . . f e e 4 4 4 4 e e f . . . 
-        . . e 4 f 2 2 2 2 2 2 f 4 e . . 
-        . . 4 d f 2 2 2 2 2 2 f d 4 . . 
-        . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
-        . . . . . f f f f f f . . . . . 
-        . . . . . f f . . f f . . . . . 
-        `, SpriteKind.Player)
-    Hero.setScale(1, ScaleAnchor.Middle)
-    Hero.setPosition(151, 120)
-    scene.cameraFollowSprite(Hero)
-    controller.moveSprite(Hero, 100, 100)
     Router = sprites.create(img`
-        .....8888888.............
-        ....8.......8............
-        ...8.........8...........
-        ..8...88888...8..........
-        .....8.....8.............
-        ....8.......8............
-        .......888...............
-        ......8...8..............
-        .f.......................
-        .f......8................
-        .f.......................
-        ffffffffffffff...........
-        feebb7b7b4b2bf...........
-        feebb5b5b5b5bf...........
-        ffffffffffffff...........
+        d..ddddd..d...dddddddd...
+        .d.....dddddddd.......ddd
+        .ddd................ddd..
+        .d.ddd.............dd..d.
+        .d...ddd..........dd...d.
+        .d.....ddd......ddd....d.
+        .d........dd..ddd......d.
+        .d.........dddd.........d
+        .d.....dddd...dd........d
+        .d..dddd........dd.....dd
+        .d.dd............dddd..d.
+        ..dd................dd.d.
+        ..d....................d.
+        ..d.............dddddd.d.
+        ..dddddd....ddddd....d.d.
+        .......dddddd..........d.
+        .dddd...............ddddd
+        ....ddddddddddddddddd....
+        .........................
+        ...............8888888...
+        ..............8.......8..
+        .............8.........8.
+        ............8...88888...8
+        ...............8.....8...
+        ..............8.......8..
+        .................888.....
+        ................8...8....
+        ...........f.............
+        ...........f......8......
+        ...........f.............
+        ..........ffffffffffffff.
+        ..........feebb7b7b4b2bf.
+        ..........feebb5b5b5b5bf.
+        ..........ffffffffffffff.
+        .........................
+        .........................
+        .........................
+        .........................
         .........................
         .........................
         .........................
@@ -1189,7 +1190,6 @@ function Lejlighed () {
     500,
     true
     )
-    Hero.setPosition(91, 111)
     Lampe = sprites.create(img`
         ..........f.......
         ..........ff......
@@ -2077,6 +2077,29 @@ function Lejlighed () {
         ..................ffffffffffffffffffffffffffff4f
         `, SpriteKind.Møbel)
     tiles.placeOnTile(Reol, tiles.getTileLocation(3, 9))
+    Hero = sprites.create(img`
+        . . . . . . f f f f . . . . . . 
+        . . . . f f f 2 2 f f f . . . . 
+        . . . f f f 2 2 2 2 f f f . . . 
+        . . f f f e e e e e e f f f . . 
+        . . f f e 2 2 2 2 2 2 e e f . . 
+        . . f e 2 f f f f f f 2 e f . . 
+        . . f f f f e e e e f f f f . . 
+        . f f e f b f 4 4 f b f e f f . 
+        . f e e 4 1 f d d f 1 4 e e f . 
+        . . f e e d d d d d d e e f . . 
+        . . . f e e 4 4 4 4 e e f . . . 
+        . . e 4 f 2 2 2 2 2 2 f 4 e . . 
+        . . 4 d f 2 2 2 2 2 2 f d 4 . . 
+        . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f . . f f . . . . . 
+        `, SpriteKind.Player)
+    Hero.setScale(1, ScaleAnchor.Middle)
+    Hero.setPosition(151, 120)
+    Hero.setPosition(91, 111)
+    scene.cameraFollowSprite(Hero)
+    controller.moveSprite(Hero, 100, 100)
 }
 let Reol: Sprite = null
 let Router: Sprite = null
