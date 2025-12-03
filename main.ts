@@ -1,12 +1,12 @@
 namespace SpriteKind {
     export const Router = SpriteKind.create()
     export const Lampe = SpriteKind.create()
-    export const Køleskab = SpriteKind.create()
     export const LampeWrong = SpriteKind.create()
     export const LampeCorrect = SpriteKind.create()
     export const ScaleRedux = SpriteKind.create()
     export const Møbel = SpriteKind.create()
     export const Seng = SpriteKind.create()
+    export const Minigame = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -84,6 +84,9 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+function TVQuiz () {
+	
+}
 controller.down.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, Hero)
     Hero.setImage(img`
@@ -211,6 +214,17 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
         . . . . . . . f f f . . . . . . 
         `)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Minigame, function (sprite, otherSprite) {
+    if (otherSprite == TVDetector) {
+        TVQuiz()
+    } else if (otherSprite == Router) {
+        RouterQuiz()
+    } else if (otherSprite == Pendel) {
+        PendelQuiz()
+    } else {
+    	
+    }
+})
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, Hero)
     Hero.setImage(img`
@@ -232,6 +246,9 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
         . . . . . . f f f . . . . . . . 
         `)
 })
+function RouterQuiz () {
+	
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, otherSprite) {
     otherSprite.setScale(1.2, ScaleAnchor.Middle)
     if (controller.B.isPressed()) {
@@ -297,6 +314,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeCorrect, function (sprite, 
         controller.moveSprite(Hero)
         scene.cameraFollowSprite(Hero)
         info.setScore(EnergiBrugt)
+        if (CompletedTasks < 4) {
+            CompletedTasks += 1
+        } else {
+            GameWin()
+        }
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -988,6 +1010,9 @@ function LampeQuiz () {
     tiles.placeOnTile(Cursor, tiles.getTileLocation(50, 50))
     controller.moveSprite(Cursor, 120, 120)
 }
+function GameWin () {
+	
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeWrong, function (sprite, otherSprite) {
     otherSprite.setScale(1.2, ScaleAnchor.Middle)
     if (controller.B.isPressed()) {
@@ -1021,6 +1046,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.LampeWrong, function (sprite, ot
     }
 })
 function Lejlighed () {
+    CompletedTasks = 0
     info.setLife(10)
     StartTid = game.runtime()
     EnergiBrugt = 0
@@ -1048,6 +1074,109 @@ function Lejlighed () {
         ...............................d
         `, SpriteKind.Seng)
     SengDetector.setPosition(68, 64)
+    TVDetector = sprites.create(img`
+        ............dddddddddd..
+        ............dddddddddd..
+        ............dddddddddd..
+        ............dddddddddd..
+        ............dddddddddd..
+        ............dddddddddd..
+        ............dddddddddd..
+        ............dddddddddd..
+        ............dddddddddd..
+        ............dddddddddd..
+        ............dddddddddd..
+        ddddddddddddddddddddd...
+        dddddddddddddddddddd....
+        ddddddddddddddddddd.....
+        dddddddddddddddddd......
+        ddddddddddddddddd.......
+        dddddddddddddddd........
+        ddddddddddddddd.........
+        dddddddddddddd..........
+        ddddddddddddd...........
+        dddddddddddd............
+        ddddddddddd.............
+        ........................
+        ........................
+        `, SpriteKind.Minigame)
+    TVDetector.setPosition(140, 225)
+    Køleskab = sprites.create(img`
+        ................
+        ................
+        ................
+        ffffffffffffffff
+        fbdddddddddddddf
+        fbdddddddddddddf
+        fbdddddddddddddf
+        fbdddddddddddddf
+        fbdddddddddddddf
+        fbdddddddddddddf
+        fbdddddddddddddf
+        fbdddddddddddddf
+        f1bbbbbbbbbbbbbf
+        f11111111111111f
+        f1ddddddddddddbf
+        f1ddddddddddddbf
+        f1ddddddddddffbf
+        f1dddddddddddfbf
+        f1dddddddddddfbf
+        f1dddddddddddfbf
+        f1ddddddddddddbf
+        f1ddddddddddddbf
+        ffddddddddddddff
+        fbffffffffffffbf
+        f1bbbbbbbbbbbb1f
+        f1111111111111bf
+        f1ddddddddddddbf
+        f1ddddddddddddbf
+        f1ddddddddddddbf
+        f1ddddddddddddbf
+        .fbbbbbbbbbbbbf.
+        ..ffffffffffff..
+        `, SpriteKind.Minigame)
+    Køleskab.setPosition(195, 50)
+    SpiseBord = sprites.create(img`
+        ...............................
+        ....................ff.........
+        ...................feeff.......
+        ..................ffeeeeff.....
+        ...................fffeeeeff...
+        ...................fefffeeeeff.
+        ...fffffffffff....feeeeffeeeeef
+        ...feeeeeeeeef...feeeeeefffeeff
+        ...fffffffffff..fffffeeeeeffff.
+        ....feeeeeeef..ffeeeffeeeff....
+        ffffffffffffffffffffffbbbffffff
+        fdddddddbbbddddddddddb666bddddf
+        fd11111b666b11111111b66666b11df
+        fd1111b66666b1111111b66666b11df
+        fd1111b66666b1111111b66666b11df
+        fd1111b66666b11111111b666b111df
+        fd11111b666b1111111111bbb1111df
+        fd111111bbb111111111111111111df
+        fd1111bbb11111111111111bbb111df
+        fd111b666b111111111111b666b11df
+        fd11b66666b1111111111b66666b1df
+        fd11b66666b1111111111b66666b1df
+        fd11b66666b1111111111b66666b1df
+        fd111b666b111111111111b666b11df
+        fdddddbbbddddddddddddddbbbddddf
+        fffffffffffffffffffffffffffffff
+        ...feeeeeeef.........feeef.....
+        ...feeeeeeef........ffeeeeff...
+        ...feeeeeeef.......fefffeeeef..
+        ..fffffffffff...f..feeeffeeeff.
+        ..feeeeeeeeef..feffeeeeefffff..
+        ..fffffffffff.feeeffeeeeeeff...
+        ..............feeeeeffeeeef....
+        ...............ffeeeefffef.....
+        .................ffeeeefff.....
+        ...................ffeeeef.....
+        .....................ffeeff....
+        .......................ff......
+        `, SpriteKind.Møbel)
+    SpiseBord.setPosition(221, 130)
     Router = sprites.create(img`
         d..ddddd..d...dddddddd...
         .d.....dddddddd.......ddd
@@ -1097,8 +1226,8 @@ function Lejlighed () {
         .........................
         .........................
         .........................
-        `, SpriteKind.Router)
-    Router.setPosition(220, 58)
+        `, SpriteKind.Minigame)
+    Router.setPosition(172, 261)
     animation.runImageAnimation(
     Router,
     [img`
@@ -2096,21 +2225,71 @@ function Lejlighed () {
         . . . . . f f . . f f . . . . . 
         `, SpriteKind.Player)
     Hero.setScale(1, ScaleAnchor.Middle)
-    Hero.setPosition(151, 120)
-    Hero.setPosition(91, 111)
+    tiles.placeOnTile(Hero, tiles.getTileLocation(11, 5))
     scene.cameraFollowSprite(Hero)
     controller.moveSprite(Hero, 100, 100)
+    Pendel = sprites.create(img`
+        .........b.........
+        .........b.........
+        .........b.........
+        ........bbb........
+        .......bd11b.......
+        .......bd11b.......
+        ......bbbbbbb......
+        ....bb1111111bb....
+        ...b11111111111b...
+        ..b11d1d11111111b..
+        .bd1d1d1111111111b.
+        .bdd1d1d1d1111111b.
+        bdddd1d1d1d1111111b
+        bddddd1d1d11111111b
+        bdddddddddddddddddb
+        .bbbbbbbbbbbbbbbbb.
+        ......4511554......
+        .......45554.......
+        ........444........
+        ...................
+        `, SpriteKind.Minigame)
+    Pendel.setPosition(220, 107)
+}
+function PendelQuiz () {
+    Pendel.setImage(img`
+        .........b.........
+        .........b.........
+        .........b.........
+        ........bbb........
+        .......bd11b.......
+        .......bd11b.......
+        ......bbbbbbb......
+        ....bb1111111bb....
+        ...b11111111111b...
+        ..b11d1d11111111b..
+        .bd1d1d1111111111b.
+        .bdd1d1d1d1111111b.
+        bdddd1d1d1d1111111b
+        bddddd1d1d11111111b
+        bdddddddddddddddddb
+        .bbbbbbbbbbbbbbbbb.
+        ......c61166c......
+        .......c666c.......
+        ........ccc........
+        `)
 }
 let Reol: Sprite = null
-let Router: Sprite = null
+let SpiseBord: Sprite = null
+let Køleskab: Sprite = null
 let ScaleReduxH: Sprite = null
 let ScaleReduxV: Sprite = null
+let CompletedTasks = 0
 let LastLocation: tiles.Location = null
 let Cursor: Sprite = null
 let Lampe: Sprite = null
 let LampeQuizStatus = 0
 let StartTid = 0
 let EnergiBrugt = 0
+let Pendel: Sprite = null
+let Router: Sprite = null
+let TVDetector: Sprite = null
 let SengDetector: Sprite = null
 let LampeAnswer4: Sprite = null
 let LampeAnswer3: Sprite = null
